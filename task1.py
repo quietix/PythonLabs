@@ -1,21 +1,11 @@
-def task1(line1: str, line2: str) -> int:
-    if len(line1) < 2 or len(line2) < 2:
-        return -1
+from random import random
 
-    counter = 0
-
-    for i in range(len(line1) - 1):
-        bigram = line1[i] + line1[i+1]
-        if line2.find(bigram) != -1:
-            counter += 1
-            letter_to_remove = bigram[0]
-            line1.replace(letter_to_remove, "")
-            line2.replace(letter_to_remove, "")
-
-    return counter
+def task1(num: int) -> list[float]:
+    arr = [random() for i in range(num)]
+    return arr
 
 
 if __name__ == "__main__":
-    line1 = input("Line1: ")
-    line2 = input("Line2: ")
-    print(task1(line1, line2))
+    list_len = input("Enter list length: ")
+    res = task1(int(list_len))
+    print(res)

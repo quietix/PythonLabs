@@ -1,23 +1,11 @@
-def task5(numbers: list):
-    """
-    Finds avarage of the numbers in list
-    """
-    sum = 0
-
-    for num in numbers:
-        sum += num
-
-    return sum / len(numbers)
-
+def task5(lst: list[int], tries: int) -> str:
+    lst_len = len(lst)
+    return "".join(str(f"{lst[i % lst_len]}, ") for i in range(tries))
 
 
 if __name__ == "__main__":
-    list1 = [1, 2, 3]
-    list2 = [4, 5, 6]
+    lst = [i for i in range(2)]
+    tries = 5
 
-    print(f'List1:\n{list1}')
-    print(f'List2:\n{list2}')
-
-    new_list = [task5(list1), task5(list2)]
-
-    print(f'New list:\n{new_list}')
+    print(f"init list:\n{lst}")
+    print(task5(lst, tries))
