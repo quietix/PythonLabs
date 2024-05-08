@@ -2,7 +2,7 @@ import json
 from pprint import pprint
 
 def task1(path_to_json: str = "data1.json"):
-    with open(path_to_json, 'rb') as f:
+    with open(path_to_json, 'r') as f:
         extracted_data: dict = json.load(f)
 
         print("Init data:")

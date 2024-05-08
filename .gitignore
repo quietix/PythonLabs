@@ -213,4 +213,5 @@ dmypy.json
 cython_debug/
 
 *.json
+*.bin
 task2/li.py
