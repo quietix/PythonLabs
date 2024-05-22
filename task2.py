@@ -1,60 +1,30 @@
-import uuid
-from enum import Enum
-from typing import Optional
+import numpy as np
+from random import randint, choices
+from pprint import pprint
 
 
-class TaskStatuses(Enum):
-    ToDo = 1
-    InProgress = 2
-    Completed = 3
+def mean_by_region(votes, regions):
+    votes = np.array(votes)
+    regions = np.array(regions)
+    uniq_regions = np.unique(regions)
+    region_mean_votes = {}
 
+    for region in uniq_regions:
+        region_votes = votes[regions == region]
+        region_mean_votes[region] = np.round(np.mean(region_votes), 2)
 
-
-class Task:
-    def __init__(self, description=None, status=None, completing_term=None):
-        self._id = uuid.uuid4()
-        self._description: Optional[str] = description
-        self._status: Optional[TaskStatuses] = status
-        self._completing_term: Optional[int] = completing_term
-
-    # id
-    def get_id(self):
-        return self._id
-
-    # description
-    def get_description(self):
-        return self._description
-
-    def set_description(self, description: str):
-        self._description = description
-
-    # status
-    def get_status(self):
-        return self._status
-
-    def set_status(self, status: TaskStatuses):
-        self._status = status
-
-    # completing_term
-    def get_completing_term(self):
-        return self._completing_term
-
-    def set_completing_term(self, completing_term):
-        self._completing_term = completing_term
-
-    # str
-    def __str__(self):
-        return f"{self.get_id()}, {self.get_description()}, {self.get_status()}, {self.get_completing_term()}"
+    return region_mean_votes
 
 
 if __name__ == "__main__":
-    description = input("Enter task description: ")
+    region_names = ["Київ", "Вінниця", "Львів", "Харків", "Дніпро", "Хмельницький"]
+    k = 15
 
-    status_num = int(input("Enter 1 for ToDo, 2 for InProgress, 3 for Completed: "))
-    status = TaskStatuses(status_num)
+    votes = [randint(50, 1500) for i in range(k)]
+    regions = choices(region_names, k=k)
 
-    completing_term = int(input("Enter completing term: "))
+    print("votes:", votes)
+    print("regions:", regions, end="\n\n")
 
-    my_task = Task(description, status, completing_term)
-
-    print(my_task)
+    res = mean_by_region(votes, regions)
+    pprint(sorted(res.items(), key=lambda p: p[1], reverse=True))

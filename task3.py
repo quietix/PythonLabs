@@ -1,72 +1,25 @@
-import math
-from abc import ABC, abstractmethod
-
-
-class Figure(ABC):
-    @abstractmethod
-    def square(self):
-        pass
-
-    @abstractmethod
-    def area(self):
-        pass
-
-    def __str__(self):
-        return f"I'm {self.__class__.__name__} with square {self.square()} and area {self.area()}."
-
-
-class Rectangle(Figure):
-    def __init__(self, a: float, b: float):
-        self.a = a
-        self.b = b
-
-    def square(self):
-        return self.a * self.b
-
-    def area(self):
-        return (self.a + self.b) * 2
-
-    def __str__(self):
-        return f"{super().__str__()}\nI have sides a = {self.a}, b = {self.b}."
-
-
-class Circle(Figure):
-    def __init__(self, R: float):
-        self.R = R
-
-    def square(self):
-        return math.pi * self.R ** 2
-
-    def area(self):
-        return 2 * math.pi * self.R
-
-    def __str__(self):
-        return f"{super().__str__()}\nI have radius R = {self.R}."
-
-
-class Triangle(Figure):
-    def __init__(self, a: float, b: float, c: float):
-        self.a = a
-        self.b = b
-        self.c = c
-
-    def square(self):
-        p = self.area() / 2
-        return (p * (p - self.a) * (p - self.b) * (p - self.c)) ** 0.5
-
-    def area(self):
-        return self.a + self.b + self.c
-
-    def __str__(self):
-        return f"{super().__str__()}\nI have sides a = {self.a}, b = {self.b}, c = {self.c}."
+def modify_fuel_data(fuel_levels, target_value=0, in_place=False):
+    if in_place:
+        for i in range(len(fuel_levels)):
+            if fuel_levels[i] % 2 == 0:
+                fuel_levels[i] = target_value
+        return fuel_levels
+    else:
+        fuel_levels_dump = fuel_levels[:]
+        for i in range(len(fuel_levels_dump)):
+            if fuel_levels_dump[i] % 2 == 0:
+                fuel_levels_dump[i] = target_value
+        return fuel_levels_dump
 
 
 if __name__ == "__main__":
-    r = Rectangle(10, 5)
-    print(r, end="\n\n")
+    fuel_levels = [i for i in range(1, 11)]
+    print("Original array:", fuel_levels)
 
-    c = Circle(5)
-    print(c, end="\n\n")
+    result = modify_fuel_data(fuel_levels, target_value=0, in_place=False)
+    print("Modified array (not in place):", result)
+    print("Original array after function call:", fuel_levels)
 
-    t = Triangle(3, 4, 5)
-    print(t, end="\n\n")
+    result_in_place = modify_fuel_data(fuel_levels, target_value=0, in_place=True)
+    print("Modified array (in place):", result_in_place)
+    print("Original array after function call (in place):", fuel_levels)
